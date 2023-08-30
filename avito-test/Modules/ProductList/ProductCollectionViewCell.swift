@@ -32,14 +32,14 @@ class ProductCollectionViewCell: UICollectionViewCell {
         label.font = UIFont.systemFont(ofSize: UIConstants.titleLabelFontSize)
         label.numberOfLines = 2
         label.lineBreakMode = .byTruncatingTail
-//        label.translatesAutoresizingMaskIntoConstraints = false
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: UIConstants.titleLabelFontSize)
-//        label.translatesAutoresizingMaskIntoConstraints = false
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -47,7 +47,7 @@ class ProductCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.textColor = .systemGray
         label.font = UIFont.systemFont(ofSize: UIConstants.titleLabelFontSize)
-//        label.translatesAutoresizingMaskIntoConstraints = false
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -55,7 +55,7 @@ class ProductCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.textColor = .systemGray
         label.font = UIFont.systemFont(ofSize: UIConstants.titleLabelFontSize)
-//        label.translatesAutoresizingMaskIntoConstraints = false
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     private lazy var loadingView: UIActivityIndicatorView = {
@@ -84,8 +84,6 @@ class ProductCollectionViewCell: UICollectionViewCell {
     private var presenter: ProductCellOutput?
     // MARK: - Public functions
     func configure(with product: ProductData, presenter: ProductCellOutput) {
-//        productImage.image = UIImage(data: product.image ?? Data())
-//        productImage.image = UIImage(named: "image")
         titleLabel.text = product.title
         priceLabel.text = product.price
         addressLabel.text = product.location

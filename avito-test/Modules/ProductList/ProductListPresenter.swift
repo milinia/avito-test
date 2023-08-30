@@ -1,5 +1,5 @@
 //
-//  FeedPresenter.swift
+//  ProductListPresenter.swift
 //  avito-test
 //
 //  Created by Evelina on 25.08.2023.
@@ -7,13 +7,13 @@
 
 import Foundation
 
-class FeedPresenter {
+class ProductListPresenter {
     // MARK: - Private properties
     private var productService: ProductServiceProtocol
     private var imageService: ImageServiceProtocol
     private var products: [ProductData] = []
     // MARK: - Public properties
-    weak var view: FeedViewInput?
+    weak var view: ProductListViewInput?
     var didTapToOpenProduct: ((ProductData) -> Void)?
     // MARK: - Init
     init(productService: ProductServiceProtocol, imageService: ImageServiceProtocol) {
@@ -21,7 +21,7 @@ class FeedPresenter {
         self.imageService = imageService
     }
 }
-extension FeedPresenter: FeedViewOutput {
+extension ProductListPresenter: ProductListViewOutput {
     func viewDidTapToOpenProduct(with index: Int) {
         didTapToOpenProduct?(products[index])
     }

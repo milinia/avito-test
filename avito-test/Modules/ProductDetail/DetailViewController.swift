@@ -118,12 +118,36 @@ class DetailViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    private lazy var contentView: UIScrollView = {
+    private lazy var scrollView: UIScrollView = {
         let view = UIScrollView()
         view.showsVerticalScrollIndicator = false
-        view.contentSize = CGSize(width: view.frame.width, height: 900)
+//        view.contentSize = CGSize(width: view.frame.width, height: 900)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.isHidden = true
+        return view
+    }()
+    private lazy var contentView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .vertical
+        view.distribution = .fill
+        view.alignment = .center
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    private lazy var stackViewForData: UIStackView = {
+        let view = UIStackView()
+        view.axis = .vertical
+        view.distribution = .fill
+        view.alignment = .leading
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    private lazy var horizontalButtonStack: UIStackView = {
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.spacing = 10
+        view.distribution = .fillProportionally
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     private lazy var loadingView: UIActivityIndicatorView = {
@@ -159,20 +183,30 @@ class DetailViewController: UIViewController {
         detailPresenter.loadProductDetail()
     }
     
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//        contentView.contentSize = CGSize(width: view.frame.width, height: dateLabel.frame.maxY + 100)
-//        print(dateLabel.frame.maxY)
-//    }
     // MARK: - Private functions
     private func setupView() {
         view.backgroundColor = .white
-        [productImage, titleLabel, priceLabel, descriptionLabel, descriptionTitleLabel, sellerTitleLabel,
-         phoneNumberLabel, emailLabel, dateLabel, addressLabel].forEach({contentView.addSubview($0)})
-        [contentView, loadingView, errorLabel].forEach({view.addSubview($0)})
+        [callButton, writeButton].forEach({horizontalButtonStack.addArrangedSubview($0)})
+        [priceLabel, titleLabel, addressLabel, sellerTitleLabel,
+         phoneNumberLabel, emailLabel, horizontalButtonStack, descriptionTitleLabel,descriptionLabel,
+         dateLabel].forEach({stackViewForData.addArrangedSubview($0)})
+        [productImage, stackViewForData].forEach({contentView.addArrangedSubview($0)})
+        [scrollView, loadingView, errorLabel].forEach({view.addSubview($0)})
+        scrollView.addSubview(contentView)
         setupContraints()
         callButton.addTarget(self, action: #selector(callButtonTapped), for: .touchUpInside)
         writeButton.addTarget(self, action: #selector(writeButtonTapped), for: .touchUpInside)
+        
+        contentView.setCustomSpacing(10, after: productImage)
+        
+        stackViewForData.setCustomSpacing(10, after: titleLabel)
+        stackViewForData.setCustomSpacing(16, after: addressLabel)
+        stackViewForData.setCustomSpacing(20, after: descriptionLabel)
+        stackViewForData.setCustomSpacing(6, after: sellerTitleLabel)
+        stackViewForData.setCustomSpacing(6, after: descriptionTitleLabel)
+        stackViewForData.setCustomSpacing(20, after: horizontalButtonStack)
+        stackViewForData.setCustomSpacing(6, after: phoneNumberLabel)
+        stackViewForData.setCustomSpacing(10, after: emailLabel)
     }
     @objc func callButtonTapped() {
         let originalString = phoneNumberLabel.text ?? ""
@@ -192,10 +226,18 @@ class DetailViewController: UIViewController {
     }
     private func setupContraints() {
         NSLayoutConstraint.activate([
-            contentView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            contentView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            contentView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            contentView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            scrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            scrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+        
+            stackViewForData.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -30),
             
             loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
@@ -203,53 +245,18 @@ class DetailViewController: UIViewController {
             errorLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             errorLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
-        let horizontalButtonStack = UIStackView()
-        horizontalButtonStack.axis = .horizontal
-        horizontalButtonStack.spacing = 10
-        horizontalButtonStack.distribution = .fillProportionally
-        horizontalButtonStack.translatesAutoresizingMaskIntoConstraints = false
-        [callButton, writeButton].forEach({horizontalButtonStack.addArrangedSubview($0)})
-        [horizontalButtonStack].forEach({contentView.addSubview($0)})
         NSLayoutConstraint.activate([
-            productImage.topAnchor.constraint(equalTo: contentView.topAnchor),
-            productImage.leftAnchor.constraint(equalTo: contentView.leftAnchor),
             productImage.widthAnchor.constraint(equalTo: contentView.widthAnchor),
             productImage.heightAnchor.constraint(equalToConstant: UIConstants.imageViewHeight),
-            
-            priceLabel.topAnchor.constraint(equalTo: productImage.bottomAnchor, constant: 10),
-            priceLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: UIConstants.contentInset),
-            
-            titleLabel.topAnchor.constraint(equalTo: priceLabel.bottomAnchor, constant: UIConstants.contentInset),
-            titleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: UIConstants.contentInset),
-            titleLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -2 * UIConstants.contentInset),
-            
-            addressLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: UIConstants.contentInset),
-            addressLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: UIConstants.contentInset),
-            addressLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -2 * UIConstants.contentInset),
-            
-            sellerTitleLabel.topAnchor.constraint(equalTo: addressLabel.bottomAnchor, constant: 2 * UIConstants.contentInset),
-            sellerTitleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: UIConstants.contentInset),
-            
-            phoneNumberLabel.topAnchor.constraint(equalTo: sellerTitleLabel.bottomAnchor, constant: UIConstants.contentInset),
-            phoneNumberLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: UIConstants.contentInset),
-            
-            emailLabel.topAnchor.constraint(equalTo: phoneNumberLabel.bottomAnchor, constant: 6),
-            emailLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: UIConstants.contentInset),
-            
-            horizontalButtonStack.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 10),
-            horizontalButtonStack.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            horizontalButtonStack.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -20),
+
+            titleLabel.widthAnchor.constraint(equalTo: stackViewForData.widthAnchor, constant: -2 * UIConstants.contentInset),
+
+            addressLabel.widthAnchor.constraint(equalTo: stackViewForData.widthAnchor, constant: -2 * UIConstants.contentInset),
+
+            horizontalButtonStack.widthAnchor.constraint(equalTo: stackViewForData.widthAnchor),
             horizontalButtonStack.heightAnchor.constraint(equalToConstant: UIConstants.buttonStackViewHeight),
-            
-            descriptionTitleLabel.topAnchor.constraint(equalTo: callButton.bottomAnchor, constant: UIConstants.contentInset),
-            descriptionTitleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: UIConstants.contentInset),
-            
-            descriptionLabel.topAnchor.constraint(equalTo: descriptionTitleLabel.bottomAnchor, constant: UIConstants.contentInset),
-            descriptionLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: UIConstants.contentInset),
-            descriptionLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -2 * UIConstants.contentInset),
-            
-            dateLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: UIConstants.contentInset),
-            dateLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: UIConstants.contentInset)
+
+            descriptionLabel.widthAnchor.constraint(equalTo: stackViewForData.widthAnchor, constant: -2 * UIConstants.contentInset)
         ])
     }
 }
@@ -257,7 +264,8 @@ extension DetailViewController: DetailViewInput {
     func updateProductData(product: ProductDetailModel) {
         
         loadingView.stopAnimating()
-        contentView.isHidden = false
+        
+        scrollView.isHidden = false
         errorLabel.isHidden = true
             
         priceLabel.text = product.price
@@ -271,13 +279,13 @@ extension DetailViewController: DetailViewInput {
     }
     func showLoading() {
         loadingView.startAnimating()
-        contentView.isHidden = true
+        scrollView.isHidden = true
         errorLabel.isHidden = true
     }
     
     func showError() {
         loadingView.stopAnimating()
-        contentView.isHidden = true
+        scrollView.isHidden = true
         errorLabel.isHidden = false
     }
 }

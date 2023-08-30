@@ -21,7 +21,7 @@ final class NetworkManager: NetworkManagerProtocol {
         }
         let request = URLRequest(url: url)
         let session = URLSession(configuration: .default)
-        let task = session.dataTask(with: request) { data, response, error in //weak self?
+        let task = session.dataTask(with: request) { data, response, error in
             if let error = error {
                 completion(.failure(error))
             } else if let data = data {

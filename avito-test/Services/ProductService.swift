@@ -27,7 +27,7 @@ final class ProductService: ProductServiceProtocol {
     }
     
     func fetchProducts(completion: @escaping (Result<[ProductData], Error>) -> Void) {
-        networkManager.makeRequest(url: requestManager.mainPageRequest()) { result in
+        networkManager.makeRequest(url: requestManager.mainPageRequest()) { [weak self] result in
             switch result {
             case .success(let data):
                 do {
@@ -39,7 +39,7 @@ final class ProductService: ProductServiceProtocol {
                                                                                 price: $0.price,
                                                                                 location: $0.location,
                                                                                 imageUrl: $0.imageUrl,
-                                                                                createdDate: self.dateFormatter.formatDate(stringDate: $0.createdDate))})
+                                                                                createdDate: self?.dateFormatter.formatDate(stringDate: $0.createdDate) ?? "")})
                     completion(.success(products))
                 } catch let decodeError {
                     completion(.failure(decodeError))
@@ -57,9 +57,8 @@ final class ProductService: ProductServiceProtocol {
                 do {
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
-                    print(String(decoding: data, as: UTF8.self))
                     let product = try decoder.decode(ProductDetailData.self, from: data)
-                    self.imageService.fetchImage(imageUrl: product.imageUrl) { result in
+                    self.imageService.fetchImage(imageUrl: product.imageUrl) { [weak self] result in
                         switch result {
                         case .success(let image):
                             completion(.success(ProductDetailModel(id: product.id,
@@ -67,7 +66,7 @@ final class ProductService: ProductServiceProtocol {
                                                                    price: product.price,
                                                                    location: product.location,
                                                                    image: image,
-                                                                   createdDate: self.dateFormatter.formatDate(stringDate: product.createdDate),
+                                                                   createdDate: self?.dateFormatter.formatDate(stringDate: product.createdDate) ?? "",
                                                                    description: product.description,
                                                                    email: product.email,
                                                                    phoneNumber: product.phoneNumber,

@@ -1,5 +1,5 @@
 //
-//  FeedViewController.swift
+//  ProductListViewController.swift
 //  avito-test
 //
 //  Created by Evelina on 24.08.2023.
@@ -12,11 +12,11 @@ protocol ViewInput: AnyObject {
     func showError()
 }
 
-protocol FeedViewInput: AnyObject, ViewInput {
+protocol ProductListViewInput: AnyObject, ViewInput {
     func updateCollectionView()
 }
 
-protocol FeedViewOutput {
+protocol ProductListViewOutput {
     func viewDidTapToOpenProduct(with index: Int)
     func loadProducts()
     func productsCount() -> Int
@@ -24,7 +24,7 @@ protocol FeedViewOutput {
     func getImageService() -> ImageServiceProtocol
 }
 
-class FeedViewController: UIViewController {
+class ProductListViewController: UIViewController {
     // MARK: - Private constants
     private enum UIConstants {
         static let errorLabelFontSize: CGFloat = 20
@@ -57,10 +57,10 @@ class FeedViewController: UIViewController {
         return label
     }()
     // MARK: - Private properties
-    private let feedPresenter: FeedViewOutput
+    private let productListPresenter: ProductListViewOutput
     // MARK: - Init
-    init(feedPresenter: FeedViewOutput) {
-        self.feedPresenter = feedPresenter
+    init(productListPresenter: ProductListViewOutput) {
+        self.productListPresenter = productListPresenter
         super.init(nibName: nil, bundle: nil)
     }
     required init?(coder: NSCoder) {
@@ -71,7 +71,7 @@ class FeedViewController: UIViewController {
         super.viewDidLoad()
         setupView()
         showLoading()
-        feedPresenter.loadProducts()
+        productListPresenter.loadProducts()
     }
     // MARK: - Private functions
     private func setupView() {
@@ -102,25 +102,25 @@ class FeedViewController: UIViewController {
                                        forCellWithReuseIdentifier: String(describing: ProductCollectionViewCell.self))
     }
 }
-extension FeedViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension ProductListViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return feedPresenter.productsCount()
+        return productListPresenter.productsCount()
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: String(describing: ProductCollectionViewCell.self),
             for: indexPath) as? ProductCollectionViewCell else { return ProductCollectionViewCell()}
-        let cellPresenter: ProductCellOutput = ProductCollectionViewCellPresenter(imageService: feedPresenter.getImageService(),
+        let cellPresenter: ProductCellOutput = ProductCollectionViewCellPresenter(imageService: productListPresenter.getImageService(),
                                                                                   view: cell)
-        cell.configure(with: feedPresenter.productByIndex(index: indexPath.row), presenter: cellPresenter)
+        cell.configure(with: productListPresenter.productByIndex(index: indexPath.row), presenter: cellPresenter)
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        feedPresenter.viewDidTapToOpenProduct(with: indexPath.row)
+        productListPresenter.viewDidTapToOpenProduct(with: indexPath.row)
     }
 }
-extension FeedViewController: FeedViewInput {
+extension ProductListViewController: ProductListViewInput {
     func showLoading() {
         loadingView.startAnimating()
         errorLabel.isHidden = true
@@ -139,7 +139,7 @@ extension FeedViewController: FeedViewInput {
         productCollectionView.reloadData()
     }
 }
-extension FeedViewController: UICollectionViewDelegateFlowLayout {
+extension ProductListViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let collectionViewWidth = collectionView.bounds.width - 16
         let itemHeight = UIConstants.productCellHeight
