@@ -21,6 +21,7 @@ protocol FeedViewOutput {
     func loadProducts()
     func productsCount() -> Int
     func productByIndex(index: Int) -> ProductData
+    func getImageService() -> ImageServiceProtocol
 }
 
 class FeedViewController: UIViewController {
@@ -56,7 +57,6 @@ class FeedViewController: UIViewController {
         return label
     }()
     // MARK: - Private properties
-    private var state: ScreenState = .success
     private let feedPresenter: FeedViewOutput
     // MARK: - Init
     init(feedPresenter: FeedViewOutput) {
@@ -110,7 +110,9 @@ extension FeedViewController: UICollectionViewDelegate, UICollectionViewDataSour
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: String(describing: ProductCollectionViewCell.self),
             for: indexPath) as? ProductCollectionViewCell else { return ProductCollectionViewCell()}
-        cell.configure(with: feedPresenter.productByIndex(index: indexPath.row))
+        let cellPresenter: ProductCellOutput = ProductCollectionViewCellPresenter(imageService: feedPresenter.getImageService(),
+                                                                                  view: cell)
+        cell.configure(with: feedPresenter.productByIndex(index: indexPath.row), presenter: cellPresenter)
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -120,20 +122,17 @@ extension FeedViewController: UICollectionViewDelegate, UICollectionViewDataSour
 }
 extension FeedViewController: FeedViewInput {
     func showLoading() {
-        // пока происходит загрузка продуктов - отображается UIActivityIndicatorView
+        loadingView.startAnimating()
         errorLabel.isHidden = true
     }
     
     func showError() {
-        // если произошла ошибка - алерт? или просто лейбл
         loadingView.stopAnimating()
         errorLabel.isHidden = false
         productCollectionView.isHidden = true
     }
     
     func updateCollectionView() {
-        // после загрузки продуктов - обновление коллекшн
-        // что если вынести загрузку картинок в селл?
         loadingView.stopAnimating()
         errorLabel.isHidden = true
         productCollectionView.isHidden = false

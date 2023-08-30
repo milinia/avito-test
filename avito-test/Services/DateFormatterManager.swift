@@ -17,7 +17,7 @@ final class DateFormatterManager:DateFormatterManagerProtocol {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yy-mm-dd"
         let date = dateFormatter.date(from: stringDate) ?? Date()
-        dateFormatter.dateFormat = "d MMMM, yyyy"
+        dateFormatter.dateFormat = "d MMMM"
         return dateFormatter.string(from: date)
     }
 }

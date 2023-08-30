@@ -19,7 +19,7 @@ final class FlowCoordinator {
     }
     
     func start() {
-        let feedPresenter = FeedPresenter(productService: assemby.productService)
+        let feedPresenter = FeedPresenter(productService: assemby.productService, imageService: assemby.imageService)
         feedPresenter.didTapToOpenProduct = wantsToOpenProductDetail
         let feedView = FeedViewController(feedPresenter: feedPresenter)
         feedPresenter.view = feedView

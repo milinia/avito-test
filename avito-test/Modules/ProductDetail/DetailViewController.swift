@@ -142,7 +142,6 @@ class DetailViewController: UIViewController {
         return label
     }()
     // MARK: - Private properties
-    private var state: ScreenState = .success
     private var detailPresenter: DetailViewOutput
     // MARK: - Init
     init(detailPresenter: DetailViewOutput) {
@@ -194,7 +193,7 @@ class DetailViewController: UIViewController {
     private func setupContraints() {
         NSLayoutConstraint.activate([
             contentView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            contentView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             contentView.leftAnchor.constraint(equalTo: view.leftAnchor),
             contentView.rightAnchor.constraint(equalTo: view.rightAnchor),
             

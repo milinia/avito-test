@@ -10,13 +10,15 @@ import Foundation
 class FeedPresenter {
     // MARK: - Private properties
     private var productService: ProductServiceProtocol
+    private var imageService: ImageServiceProtocol
     private var products: [ProductData] = []
     // MARK: - Public properties
     weak var view: FeedViewInput?
     var didTapToOpenProduct: ((ProductData) -> Void)?
     // MARK: - Init
-    init(productService: ProductServiceProtocol) {
+    init(productService: ProductServiceProtocol, imageService: ImageServiceProtocol) {
         self.productService = productService
+        self.imageService = imageService
     }
 }
 extension FeedPresenter: FeedViewOutput {
@@ -45,5 +47,9 @@ extension FeedPresenter: FeedViewOutput {
     
     func productByIndex(index: Int) -> ProductData {
         return products[index]
+    }
+    
+    func getImageService() -> ImageServiceProtocol {
+        return imageService
     }
 }

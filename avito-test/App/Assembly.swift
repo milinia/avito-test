@@ -12,6 +12,7 @@ protocol AssemblyProtocol {
     var networkManager: NetworkManagerProtocol { get }
     var dateFormatter: DateFormatterManagerProtocol { get }
     var productService: ProductServiceProtocol { get }
+    var imageService: ImageServiceProtocol { get }
 }
 
 final class Assembly: AssemblyProtocol {
@@ -20,5 +21,7 @@ final class Assembly: AssemblyProtocol {
     lazy var dateFormatter: DateFormatterManagerProtocol = DateFormatterManager()
     lazy var productService: ProductServiceProtocol = ProductService(networkManager: networkManager,
                                                                      requestManager: requestApiManager,
-                                                                     dateFormatter: dateFormatter)
+                                                                     dateFormatter: dateFormatter,
+                                                                     imageService: imageService)
+    lazy var imageService: ImageServiceProtocol = ImageService(networkManager: networkManager)
 }

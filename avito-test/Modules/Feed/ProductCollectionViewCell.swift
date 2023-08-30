@@ -7,11 +7,7 @@
 
 import UIKit
 
-protocol ProductCollectionViewCellOutput {
-    func loadImage(imageUrl: String)
-}
-
-protocol ProductCollectionViewCellInput {
+protocol ProductCellInput: AnyObject {
     func setImage(image: Data?)
 }
 
@@ -69,22 +65,25 @@ class ProductCollectionViewCell: UICollectionViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
-    private var presenter: ProductCollectionViewCellOutput?
-    private let productService: ProductServiceProtocol = ProductService(networkManager: NetworkManager(), requestManager: RequestApiManager(),
-                                                                        dateFormatter: DateFormatterManager())
     // MARK: - Inits
     override init(frame: CGRect) {
         super.init(frame: frame)
         initialize()
         makeShadow()
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        productImage.image = nil
+        presenter?.view = nil
+        presenter = nil
+        [titleLabel, priceLabel, addressLabel, dateLabel].forEach({$0.text = nil})
+    }
+    private var presenter: ProductCellOutput?
     // MARK: - Public functions
-    func configure(with product: ProductData) {
+    func configure(with product: ProductData, presenter: ProductCellOutput) {
 //        productImage.image = UIImage(data: product.image ?? Data())
 //        productImage.image = UIImage(named: "image")
         titleLabel.text = product.title
@@ -92,18 +91,8 @@ class ProductCollectionViewCell: UICollectionViewCell {
         addressLabel.text = product.location
         dateLabel.text = product.createdDate
         loadingView.startAnimating()
-//        presenter?.loadImage(imageUrl: product.imageUrl)
-        productService.fetchImage(imageUrl: product.imageUrl) { result in
-            switch result {
-            case .success(let image):
-                DispatchQueue.main.async {
-                    self.loadingView.stopAnimating()
-                    self.productImage.image = UIImage(data: image)
-                }
-            case .failure(_):
-                break
-            }
-        }
+        self.presenter = presenter
+        presenter.loadImage(imageUrl: product.imageUrl)
     }
     // MARK: - Private functions
     private func makeShadow() {
@@ -144,11 +133,9 @@ class ProductCollectionViewCell: UICollectionViewCell {
         ])
     }
 }
-extension ProductCollectionViewCell: ProductCollectionViewCellInput {
+extension ProductCollectionViewCell: ProductCellInput {
     func setImage(image: Data?) {
-        DispatchQueue.main.async {
-            self.loadingView.stopAnimating()
-            self.productImage.image = UIImage(data: image ?? Data())
-        }
+        loadingView.stopAnimating()
+        productImage.image = UIImage(data: image ?? Data())
     }
 }
