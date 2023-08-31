@@ -29,6 +29,12 @@
 		E56D957C2A9BA2DE000843B9 /* ProductDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56D957B2A9BA2DE000843B9 /* ProductDetailModel.swift */; };
 		E572E9D62A9DF02E002B139B /* ProductService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E572E9D52A9DF02E002B139B /* ProductService.swift */; };
 		E572E9E12A9DF81B002B139B /* DateFormatterManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E572E9E02A9DF81B002B139B /* DateFormatterManagerTests.swift */; };
+		E5C8AF172AA0AAB600F2193C /* ProductListPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C8AF162AA0AAB600F2193C /* ProductListPresenterTests.swift */; };
+		E5C8AF1A2AA0ABAD00F2193C /* ProductServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C8AF192AA0ABAD00F2193C /* ProductServiceMock.swift */; };
+		E5C8AF1C2AA0AC2400F2193C /* ImageServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C8AF1B2AA0AC2400F2193C /* ImageServiceMock.swift */; };
+		E5C8AF1E2AA0AC7000F2193C /* ProductListVCMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C8AF1D2AA0AC7000F2193C /* ProductListVCMock.swift */; };
+		E5C8AF222AA0BB8300F2193C /* ProductDetailVCMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C8AF212AA0BB8300F2193C /* ProductDetailVCMock.swift */; };
+		E5C8AF242AA0BC6F00F2193C /* ProductDetailPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C8AF232AA0BC6F00F2193C /* ProductDetailPresenterTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +73,12 @@
 		E572E9D52A9DF02E002B139B /* ProductService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductService.swift; sourceTree = "<group>"; };
 		E572E9DE2A9DF81B002B139B /* avito-testTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "avito-testTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E572E9E02A9DF81B002B139B /* DateFormatterManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterManagerTests.swift; sourceTree = "<group>"; };
+		E5C8AF162AA0AAB600F2193C /* ProductListPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListPresenterTests.swift; sourceTree = "<group>"; };
+		E5C8AF192AA0ABAD00F2193C /* ProductServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductServiceMock.swift; sourceTree = "<group>"; };
+		E5C8AF1B2AA0AC2400F2193C /* ImageServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageServiceMock.swift; sourceTree = "<group>"; };
+		E5C8AF1D2AA0AC7000F2193C /* ProductListVCMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListVCMock.swift; sourceTree = "<group>"; };
+		E5C8AF212AA0BB8300F2193C /* ProductDetailVCMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailVCMock.swift; sourceTree = "<group>"; };
+		E5C8AF232AA0BC6F00F2193C /* ProductDetailPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailPresenterTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,9 +205,23 @@
 		E572E9DF2A9DF81B002B139B /* avito-testTests */ = {
 			isa = PBXGroup;
 			children = (
+				E5C8AF182AA0AABB00F2193C /* Mocks */,
 				E572E9E02A9DF81B002B139B /* DateFormatterManagerTests.swift */,
+				E5C8AF162AA0AAB600F2193C /* ProductListPresenterTests.swift */,
+				E5C8AF232AA0BC6F00F2193C /* ProductDetailPresenterTests.swift */,
 			);
 			path = "avito-testTests";
+			sourceTree = "<group>";
+		};
+		E5C8AF182AA0AABB00F2193C /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				E5C8AF192AA0ABAD00F2193C /* ProductServiceMock.swift */,
+				E5C8AF1B2AA0AC2400F2193C /* ImageServiceMock.swift */,
+				E5C8AF1D2AA0AC7000F2193C /* ProductListVCMock.swift */,
+				E5C8AF212AA0BB8300F2193C /* ProductDetailVCMock.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -324,7 +350,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5C8AF1A2AA0ABAD00F2193C /* ProductServiceMock.swift in Sources */,
+				E5C8AF242AA0BC6F00F2193C /* ProductDetailPresenterTests.swift in Sources */,
+				E5C8AF172AA0AAB600F2193C /* ProductListPresenterTests.swift in Sources */,
 				E572E9E12A9DF81B002B139B /* DateFormatterManagerTests.swift in Sources */,
+				E5C8AF1E2AA0AC7000F2193C /* ProductListVCMock.swift in Sources */,
+				E5C8AF1C2AA0AC2400F2193C /* ImageServiceMock.swift in Sources */,
+				E5C8AF222AA0BB8300F2193C /* ProductDetailVCMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
