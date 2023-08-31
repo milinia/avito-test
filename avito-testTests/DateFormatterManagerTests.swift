@@ -1,5 +1,5 @@
 //
-//  avito_testTests.swift
+//  DateFormatterManagerTests.swift
 //  avito-testTests
 //
 //  Created by Evelina on 29.08.2023.
@@ -8,7 +8,7 @@
 import XCTest
 @testable import avito_test
 
-final class avito_testTests: XCTestCase {
+final class DateFormatterManagerTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -19,11 +19,8 @@ final class avito_testTests: XCTestCase {
     }
 
     func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+        let dateString = "2023-08-14"
+        let expectedString = "14 августа"
     }
 
     func testPerformanceExample() throws {

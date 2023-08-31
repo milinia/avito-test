@@ -15,7 +15,8 @@ final class DateFormatterManager:DateFormatterManagerProtocol {
     
     func formatDate(stringDate: String) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yy-mm-dd"
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: -10800)
         let date = dateFormatter.date(from: stringDate) ?? Date()
         dateFormatter.dateFormat = "d MMMM"
         return dateFormatter.string(from: date)

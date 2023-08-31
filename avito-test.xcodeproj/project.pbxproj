@@ -28,7 +28,7 @@
 		E56D957A2A9B295E000843B9 /* StringContants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56D95792A9B295E000843B9 /* StringContants.swift */; };
 		E56D957C2A9BA2DE000843B9 /* ProductDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56D957B2A9BA2DE000843B9 /* ProductDetailModel.swift */; };
 		E572E9D62A9DF02E002B139B /* ProductService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E572E9D52A9DF02E002B139B /* ProductService.swift */; };
-		E572E9E12A9DF81B002B139B /* avito_testTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E572E9E02A9DF81B002B139B /* avito_testTests.swift */; };
+		E572E9E12A9DF81B002B139B /* DateFormatterManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E572E9E02A9DF81B002B139B /* DateFormatterManagerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,7 +66,7 @@
 		E56D957B2A9BA2DE000843B9 /* ProductDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailModel.swift; sourceTree = "<group>"; };
 		E572E9D52A9DF02E002B139B /* ProductService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductService.swift; sourceTree = "<group>"; };
 		E572E9DE2A9DF81B002B139B /* avito-testTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "avito-testTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E572E9E02A9DF81B002B139B /* avito_testTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = avito_testTests.swift; sourceTree = "<group>"; };
+		E572E9E02A9DF81B002B139B /* DateFormatterManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterManagerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,7 +193,7 @@
 		E572E9DF2A9DF81B002B139B /* avito-testTests */ = {
 			isa = PBXGroup;
 			children = (
-				E572E9E02A9DF81B002B139B /* avito_testTests.swift */,
+				E572E9E02A9DF81B002B139B /* DateFormatterManagerTests.swift */,
 			);
 			path = "avito-testTests";
 			sourceTree = "<group>";
@@ -324,7 +324,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E572E9E12A9DF81B002B139B /* avito_testTests.swift in Sources */,
+				E572E9E12A9DF81B002B139B /* DateFormatterManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
