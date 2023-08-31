@@ -8,16 +8,16 @@
 import Foundation
 
 protocol DateFormatterManagerProtocol {
-    func formatDate(stringDate: String) -> String
+    func formatDate(stringDate: String) -> String?
 }
 
 final class DateFormatterManager:DateFormatterManagerProtocol {
     
-    func formatDate(stringDate: String) -> String {
+    func formatDate(stringDate: String) -> String? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         dateFormatter.timeZone = TimeZone(secondsFromGMT: -10800)
-        let date = dateFormatter.date(from: stringDate) ?? Date()
+        guard let date = dateFormatter.date(from: stringDate) else {return nil}
         dateFormatter.dateFormat = "d MMMM"
         return dateFormatter.string(from: date)
     }

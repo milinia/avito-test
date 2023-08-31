@@ -9,25 +9,35 @@ import XCTest
 @testable import avito_test
 
 final class DateFormatterManagerTests: XCTestCase {
+    
+    private var dateFormatterManager: DateFormatterManagerProtocol!
 
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        try super.setUpWithError()
+        dateFormatterManager = DateFormatterManager()
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        try super.tearDownWithError()
+        dateFormatterManager = nil
     }
 
-    func testExample() throws {
+    func testValidValue() {
+        //given
         let dateString = "2023-08-14"
         let expectedString = "14 августа"
+        //when
+        let funcResult = dateFormatterManager.formatDate(stringDate: dateString)
+        //then
+        XCTAssertEqual(funcResult, expectedString)
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        measure {
-            // Put the code you want to measure the time of here.
-        }
+    
+    func testInvalidValue() {
+        //given
+        let dateString = "1"
+        //when
+        let funcResult = dateFormatterManager.formatDate(stringDate: dateString)
+        //then
+        XCTAssertNil(funcResult)
     }
-
 }
